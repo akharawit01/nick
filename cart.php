@@ -38,8 +38,12 @@ include 'components/components.php';
                         $strSQL = "SELECT * FROM product WHERE id = '".$value."' ";
                         $objQuery = mysql_query($strSQL)  or die(mysql_error());
                         $objResult = mysql_fetch_array($objQuery);
-                        $Total = $_SESSION["strQty"][$key] * $objResult["price"];
+
+                        $totaldis = $objResult['price']-(($objResult['price']*$objResult['discount'])/100);
+                        $Total = $_SESSION["strQty"][$key] * $totaldis;
                         $SumTotal = $SumTotal + $Total;
+
+
                     ?>
                     <tr>
                         <td data-th="Product">
@@ -51,7 +55,7 @@ include 'components/components.php';
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price"><?php echo $objResult["price"];?></td>
+                        <td data-th="Price"><?php echo number_format($totaldis,2);?></td>
                         <form action="php/update.php" method="get">
                         <td data-th="Quantity">
                             <input type="number" class="form-control text-center" name="qty" value="<?php echo $_SESSION["strQty"][$key];?>">

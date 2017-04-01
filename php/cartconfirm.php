@@ -22,11 +22,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['name'])) {
             $strSQL = "SELECT * FROM product WHERE id = '".$value."' ";
             $objQuery = mysql_query($strSQL)  or die(mysql_error());
             $objResult = mysql_fetch_array($objQuery);
-            $Total = $_SESSION["strQty"][$key] * $objResult["price"];
+
+            $totaldis = $objResult['price']-(($objResult['price']*$objResult['discount'])/100);
+            $Total = $_SESSION["strQty"][$key] * $totaldis;
             $SumTotal = $SumTotal + $Total;
 
             $cmm=($i==0)?'':',';
-            $sql.=$cmm."('','$OrderId','$value','".$_SESSION["strQty"][$key]."','".$objResult["price"]."')";
+            $sql.=$cmm."('','$OrderId','$value','".$_SESSION["strQty"][$key]."','".$totaldis."')";
             $i++;
         }
     }

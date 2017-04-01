@@ -149,7 +149,18 @@ $title = $row_title['name'];
                             <div class="caption">
                                 <h4><?php echo $row_products['name']; ?><br><small>รหัส: <?php echo $row_products['code']; ?></small></h4>
                                 <div class="text-right">
-                                    <span class="price"><?php echo $totaldis; ?> ฿<?php echo $row_products['price']; ?></span> / <?php echo $row_unit['name']; ?> </span>
+                                    <?php
+                                    if (!empty($row_products['discount'])) {
+                                    ?>
+                                        <span class="price">฿<?php echo number_format($totaldis,2);?> <s style="color: red;">฿<?php echo $row_products['price']; ?></s></span> / <?php echo $row_unit['name']; ?> </span>
+                                    <?php
+                                    }else {
+                                    ?>
+                                        <span class="price">฿<?php echo $row_products['price']; ?></span> / <?php echo $row_unit['name']; ?> </span>
+                                    <?php
+                                    }
+                                    ?>
+                                    
                                 </div>
                                 <p><a href="php/store_items.php?ProductID=<?php echo $row_products["id"];?>" class="btn btn-cart" role="button"><span></span></a></p>
                             </div>

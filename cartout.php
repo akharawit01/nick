@@ -39,7 +39,8 @@ include 'components/components.php';
                         $strSQL = "SELECT * FROM product WHERE id = '".$value."' ";
                         $objQuery = mysql_query($strSQL)  or die(mysql_error());
                         $objResult = mysql_fetch_array($objQuery);
-                        $Total = $_SESSION["strQty"][$key] * $objResult["price"];
+                        $totaldis = $objResult['price']-(($objResult['price']*$objResult['discount'])/100);
+                        $Total = $_SESSION["strQty"][$key] * $totaldis;
                         $SumTotal = $SumTotal + $Total;
                     ?>
                     <tr>
@@ -52,7 +53,7 @@ include 'components/components.php';
                                 </div>
                             </div>
                         </td>
-                        <td data-th="ราคา"><?php echo $objResult["price"];?></td>
+                        <td data-th="ราคา"><?php echo number_format($totaldis,2);?></td>
                         <td data-th="จำนวน">
                             <?php echo $_SESSION["strQty"][$key];?>
                         </td>
